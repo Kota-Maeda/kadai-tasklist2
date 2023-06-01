@@ -11,13 +11,15 @@
             <thead>
                 <tr>
                     <th>id</th>
+                    <th>スタッツ</th>
                     <th>メッセージ</th>
                 </tr>
             </thead>
             <tbody>
                 @foreach ($tasks as $task)
                 <tr>
-                    <td><a class="link link-hover text-info" href="#">{{ $task->id }}</a></td>
+                    <td><a class="link link-hover texr-info" href="{{ route('tasks.show',$task->id) }}">{{ $task->id }}</a></td>
+                    <td>{{ $task->status}}</td>
                     <td>{{ $task->content }}</td>
                 </tr>
                 @endforeach
@@ -27,11 +29,5 @@
     {{-- タスク作成ページへのリンク --}}
     
     <a class="btn btn-primary" href="{{ route('tasks.create') }}">タスクの追加</a>
-    
-    @foreach ($tasks as $task)
-    <tr>
-        <td><a class="link link-hover texr-info" href="{{ route('tasks.show',$task->id) }}">{{ $task->id }}</a></td>
-    </tr>
-    @endforeach
 
 @endsection
