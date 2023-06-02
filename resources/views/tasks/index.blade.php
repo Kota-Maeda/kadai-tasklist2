@@ -11,7 +11,7 @@
             <thead>
                 <tr>
                     <th>id</th>
-                    <th>スタッツ</th>
+                    <th>ステータスカラム</th>
                     <th>メッセージ</th>
                 </tr>
             </thead>

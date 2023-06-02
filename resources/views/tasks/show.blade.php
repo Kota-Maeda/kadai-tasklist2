@@ -13,7 +13,7 @@
         </tr>
         
         <tr>
-            <th>スタッツ</th>
+            <th>ステータスカラム</th>
             <td>{{ $task->status }}</td>
         </tr>
 

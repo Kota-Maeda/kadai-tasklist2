@@ -75,7 +75,7 @@ class TasksController extends Controller
         //バリデーション
         $request->validate([
             'content' => 'required|max:255',
-            'status' => 'required|max:20',    
+            'status' => 'required|max:10',    
         ]);
         
         //idの値でタスクを検索して取得

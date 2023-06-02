@@ -12,7 +12,7 @@
                 
                 <div class="form control my-4">
                     <label for="status" class="label">
-                        <span class="label-text">スタッツ:</span>
+                        <span class="label-text">ステータスカラム:</span>
                     </label>
                     <input type="text" name="status" class="input input-bordered w-full">
                 </div>
