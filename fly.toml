@@ -1,4 +1,4 @@
-# fly.toml app configuration file generated for tasklist-fly on 2023-06-02T04:48:20Z
+# fly.toml app configuration file generated for tasklist-fly on 2023-06-08T04:43:14Z
 #
 # See https://fly.io/docs/reference/configuration/ for information about how to use this file.
 #
@@ -13,19 +13,19 @@ console_command = "php /var/www/html/artisan tinker"
     PHP_VERSION = "8.1"
 
 [env]
+  APP_DEBUG = "false"
   APP_ENV = "production"
+  APP_NAME = "Laravel"
+  APP_URL = "https://tasklist-fly.fly.dev"
+  DB_CONNECTION = "pgsql"
+  DB_DATABASE = "postgres"
+  DB_HOST = "db.sevzpibgbkpeheibpeff.supabase.co"
+  DB_PORT = "5432"
+  DB_USERNAME = "postgres"
   LOG_CHANNEL = "stderr"
   LOG_LEVEL = "info"
   LOG_STDERR_FORMATTER = "Monolog\\Formatter\\JsonFormatter"
-  APP_URL = "https://tasklist-fly.fly.dev/"
-  APP_NAME = "Laravel"
-  APP_DEBUG = false
-  DB_CONNECTION = "pgsql"
-  DB_HOST = "db.xemnufgwppvbxposfkhw.supabase.co"
-  DB_PORT = 5432
-  DB_DATABASE = "postgres"
-  DB_USERNAME = "postgres"
-  
+
 [http_service]
   internal_port = 8080
   force_https = true
