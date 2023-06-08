@@ -3,6 +3,8 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\TasksController;
 
+use resources\auth;
+
 //Route::get('/', [TasksController::class, 'index']);
 
 //下のコメントアウトのコードをまとめた機能を持つ便利なコード
@@ -22,8 +24,14 @@ Route::resource('tasks', TasksController::class);
 //Route::delete('tasks/{id}', [TasksController::class, 'destroy']);
 
 //index: showの補助ページ
-Route::get('/', [TasksController::class, 'index'])->name('tasks.index');
+//Route::get('/', [TasksController::class, 'index'])->name('tasks.index');
 //create: 新規作成用のフォームページ
 //Route::get('tasks/create', [TasksController::class, 'create'])->name('tasks.create');
 //edit: 更新用フォームページ
 //Route::get('tasks/{id}/edit', [TasksConreoller::class, 'edit'])->name('tasks.edit');
+
+Route::get('/', function () {return view('dashboard');});
+
+Route::get('/dashboard', function () {return view('dashboard');})->middleware(['auth'])->name('dashboard');
+
+require __DIR__.'/auth.php';
