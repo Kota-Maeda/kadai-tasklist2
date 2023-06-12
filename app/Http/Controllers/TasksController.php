@@ -5,16 +5,14 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 
 use App\Models\Task;
+use App\Models\User;
+use App\Models\Micropost;
 
 class TasksController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
     public function index()
     {
+        
         //タスク一覧を取得
         $tasks = Task::all();
         
@@ -40,12 +38,16 @@ class TasksController extends Controller
             'status' => 'required|max:10',
         ]);
         
+        
+        
         //タスクを作成
         $tasks = new Task;
         $tasks->status = $request->status;
         $tasks->content = $request->content;
+        //$tasks->user_id = $request->user()->id;
+        $tasks->user_id = $request->user()->id;
         $tasks->save();
-        
+
         //トップページにリダイレクトさせる
         return redirect('/');
     }

@@ -45,5 +45,12 @@ class User extends Authenticatable
     public function microposts()
     {
         return $this->hasMany(Micropost::class);
+        //return $this->hasMany(Task::class);
     }
+    
+    public function loadRelationshipCounts()
+    {
+        $this->loadCount('microposts');
+    }
+
 }
