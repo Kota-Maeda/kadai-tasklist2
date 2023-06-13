@@ -34,9 +34,16 @@ Route::resource('users', UsersController::class, ['show']);
 //未ログイン状態の設定
 Route::group(['middleware' => ['guest']], function () {
     //トップページにもどったusers.indexを表示させる。
-    Route::get('/', function () { return view('users.index');});
+    //Route::get('/', function () { return view('users.index');});
+    //Route::get('/', [UsersController::class, 'index'])->name('users.index');
     //UsersControllerの'index'と'show'だけを読み込む。
+    
+    // ↓dashboard使うパターン
+    Route::get('/', function () {return view('dashboard');});
+    Route::get('/dashboard', function () {return view('dashboard');})->middleware(['auth'])->name('dashboard');
+    
     Route::resource('users', UsersController::class, ['only' => ['index', 'show']]);
+    
 });
 
 //ログインしている状態の設定

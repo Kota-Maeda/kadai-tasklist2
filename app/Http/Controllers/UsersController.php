@@ -19,6 +19,10 @@ class UsersController extends Controller
         return view('users.index', [
             'users' => $users,
         ]);
+        
+        //トップページにリダイレクトさせる
+        return redirect('/');
+        
     }
     
     public function show($id)
