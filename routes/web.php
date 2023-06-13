@@ -2,16 +2,12 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\TasksController;
-
 use App\Http\Controllers\UsersController;
-use App\Http\Controllers\MicropostsController;
 
 use resources\auth;
 
-//Route::get('/', [TasksController::class, 'index']);
-
 //下のコメントアウトのコードをまとめた機能を持つ便利なコード
-
+//Route::resource('tasks', TasksController::class);
 
 
 //CRUD
@@ -33,19 +29,24 @@ use resources\auth;
 //edit: 更新用フォームページ
 //Route::get('tasks/{id}/edit', [TasksConreoller::class, 'edit'])->name('tasks.edit');
 
-Route::get('/', [TasksController::class, 'index']);
-
-//Route::get('/', [MicropostsController::class, 'index']);
-
-//Route::get('/dashboard', [MicropostsController::class, 'index'])->middleware(['auth'])->name('dashboard');
-Route::get('/dashboard', [TasksController::class, 'index'])->middleware(['auth'])->name('dashboard');
-
-Route::resource('tasks', TasksController::class);
-
 require __DIR__.'/auth.php';
 
-Route::group(['middleware' => ['auth']], function () {
+Route::resource('users', UsersController::class, ['show']);
+
+//未ログイン状態の設定
+Route::group(['middleware' => ['guest']], function () {
+    //トップページにもどったusers.indexを表示させる。
+    Route::get('/', function () { return view('users.index');});
+    //UsersControllerの'index'と'show'だけを読み込む。
     Route::resource('users', UsersController::class, ['only' => ['index', 'show']]);
-    //Route::resource('microposts', MicropostsController::class, ['only' => ['store', 'destroy']]);
-    Route::resource('microposts', TasksController::class, ['only' => ['store', 'destroy']]);
+});
+
+//ログインしている状態の設定
+Route::group(['middleware' => ['auth']], function () {
+    //TaskControllerのレジストリを全て読み込む
+    Route::resource('tasks', TasksController::class);
+    Route::get('tasks/{id}', [TasksController::class, 'show']);
+    //UserControllerの'index'と'show'だけを読み込む。
+    Route::resource('users', UsersController::class, ['only' => ['index', 'show']]);
+    Route::get('/', function () { return view('tasks.index');});
 });

@@ -6,11 +6,11 @@
             {{-- ユーザ情報 --}}
             @include('users.card')
         </aside>
-        <div class="sm:col-span-2 mt-4">
+        {{--<div class="sm:col-span-2 mt-4">
             {{-- 投稿フォーム --}}
-            @include('microposts.form')
+            {{--@include('tasks.form')--}}
             {{-- 投稿一覧 --}}
-            @include('microposts.microposts')
-        </div>
+            {{--@include('tasks.tasks')
+        {{--</div>--}}
     </div>
 @endsection

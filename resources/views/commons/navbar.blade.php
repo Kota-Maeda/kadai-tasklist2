@@ -2,7 +2,7 @@
     <nav class="navbar bg-neutral text-neutral-content">
         {{-- トップページへのリンク --}}
         <div class="flex-1">
-            <h1><a class="btn btn-ghost normal-case text-xl" href="/">Microposts</a></h1>
+            <h1><a class="btn btn-ghost normal-case text-xl" href="/">タスク管理アプリケーション</a></h1>
         </div>
 
         <div class="flex-none">
@@ -12,7 +12,7 @@
                     @include('commons.link_items')
                 </ul>
                 <div class="dropdown dropdown-end">
-                    <button type="button" tabindex="0" class="btn btn-ghost normal-case font-normal lg:hidden">
+                    <button type="button" tabindex="0" class="btn btn-ghost normal-case font-normal">
                         @if (Auth::check())
                             {{ Auth::user()->name }}
                         @else

@@ -42,15 +42,15 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
     ];
     
-    public function microposts()
+    public function tasks()
     {
-        return $this->hasMany(Micropost::class);
-        //return $this->hasMany(Task::class);
+        //return $this->hasMany(Micropost::class);
+        return $this->hasMany(Task::class);
     }
     
     public function loadRelationshipCounts()
     {
-        $this->loadCount('microposts');
+        $this->loadCount('tasks');
     }
 
 }
