@@ -11,8 +11,6 @@ use resources\auth;
 
 
 //CRUD
-
-
 //タスクの個別詳細ページを表示
 //Route::get('tasks/{id}', [TasksController::class, 'show']);
 //タスクの新規登録を処理
@@ -45,8 +43,13 @@ Route::group(['middleware' => ['guest']], function () {
 Route::group(['middleware' => ['auth']], function () {
     //TaskControllerのレジストリを全て読み込む
     Route::resource('tasks', TasksController::class);
-    Route::get('tasks/{id}', [TasksController::class, 'show']);
     //UserControllerの'index'と'show'だけを読み込む。
     Route::resource('users', UsersController::class, ['only' => ['index', 'show']]);
-    Route::get('/', function () { return view('tasks.index');});
+    
+    //トップページの指定
+    Route::get('/', [TasksController::class, 'index'])->name('tasks.index');
+    Route::get('tasks/{id}', [TasksController::class, 'show']);
+    
+    //↓この書き方だとデータベースがうまく読み込まれない
+    //Route::get('/', function () { return view('tasks.index');});
 });

@@ -6,7 +6,6 @@ use Illuminate\Http\Request;
 
 use App\Models\Task;
 use App\Models\User;
-use App\Models\Micropost;
 
 class TasksController extends Controller
 {
