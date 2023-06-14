@@ -65,15 +65,17 @@ class TasksController extends Controller
     
     public function show($id)
     {
-        //idの値でタスクを検索して取得
         $tasks = Task::findOrFail($id);
         
         //認証済みユーザがその投稿者の所有者であれば
-        if(\Auth::id() == $tasks->user_id){
+        if(\Auth::id() === $tasks->user_id){
+        //idの値でタスクを検索して取得
+        
         //タスク詳細ビューでそれを表示
             return view('tasks.show', [
                 'task' => $tasks,
             ]);
+            //return redirect('/');
         }
         else{
             return redirect('/');
@@ -84,15 +86,14 @@ class TasksController extends Controller
     public function edit($id)
     {
         //idの値でタスクを検索して取得
-        //$tasks = Task::findOrFail($id);
+        $tasks = Task::findOrFail($id);
         
         //タスク編集ビューでそれを表示
         //return view('tasks.edit', ['tasks' => $tasks ]);
         
         //認証済みユーザがその投稿者の所有者であれば
-        if(\Auth::id() == $tasks->user_id){
+        if(\Auth::id() === $tasks->user_id){
             if(\Auth::check()){
-                $tasks = Task::findOrFail($id);
                 return view('tasks.edit', ['tasks' => $tasks ]);
             }
         }
@@ -103,20 +104,23 @@ class TasksController extends Controller
     
     public function update(Request $request, $id)
     {
-        //バリデーション
-        $request->validate([
-            'content' => 'required|max:255',
-            'status' => 'required|max:10',    
-        ]);
+        //idの値でタスクを検索して取得
+        $tasks = Task::findOrFail($id);
         
         //認証済みユーザがその投稿者の所有者であれば
-        if(\Auth::id() == $tasks->user_id){
-            //idの値でタスクを検索して取得
-            $task = Task::findOrFail($id);
+        if(\Auth::id() === $tasks->user_id){
+            //バリデーション
+            $request->validate([
+                'content' => 'required|max:255',
+                'status' => 'required|max:10',    
+            ]);
+            
             //タスクを更新
-            $task->status = $request->status;
-            $task->content = $request->content;
-            $task->save();
+            $tasks->status = $request->status;
+            $tasks->content = $request->content;
+            $tasks->save();
+            //トップページへリダイレクトさせる
+            return redirect('/');
         }
         else{
             return redirect('/');
@@ -132,22 +136,23 @@ class TasksController extends Controller
         ]);
         $task->save();
         */
-        
-        //トップページへリダイレクトさせる
-        return redirect('/');
     }
     
     public function destroy($id)
     {
-        //認証済みユーザがその投稿者の所有者であれば
-        if(\Auth::id() == $tasks->user_id){
-            //idでタスクを検索して削除
-            $task = Task::findOrFail($id);
-            //タスクを削除
-            $task->delete();
-        }
+        //idの値でタスクを検索して取得
+        $tasks = Task::findOrFail($id);
         
-        //トップページへリダイレクト
-        return redirect('/');
+        //認証済みユーザがその投稿者の所有者であれば
+        if(\Auth::id() === $tasks->user_id){
+            //タスクを削除
+            $tasks->delete();
+            //トップページへリダイレクト
+            return redirect('/');
+        }
+        else{
+            //トップページへリダイレクト
+            return redirect('/');
+        }
     }
 }
