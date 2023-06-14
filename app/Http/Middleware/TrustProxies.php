@@ -13,10 +13,10 @@ class TrustProxies extends Middleware
      * @var array<int, string>|string|null
      */
     //mysqlの時
-    //protected $proxies = "*";
+    protected $proxies = "*";
     
     //デプロイの時よう
-    protected $proxies;
+    //protected $proxies;
 
     /**
      * The headers that should be used to detect proxies.

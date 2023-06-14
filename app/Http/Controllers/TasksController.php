@@ -68,10 +68,17 @@ class TasksController extends Controller
         //idの値でタスクを検索して取得
         $tasks = Task::findOrFail($id);
         
+        //認証済みユーザがその投稿者の所有者であれば
+        if(\Auth::id() == $tasks->user_id){
         //タスク詳細ビューでそれを表示
-        return view('tasks.show', [
-            'task' => $tasks,
-        ]);
+            return view('tasks.show', [
+                'task' => $tasks,
+            ]);
+        }
+        else{
+            return redirect('/');
+        }
+
     }
     
     public function edit($id)
@@ -82,9 +89,15 @@ class TasksController extends Controller
         //タスク編集ビューでそれを表示
         //return view('tasks.edit', ['tasks' => $tasks ]);
         
-        if(\Auth::check()){
-            $tasks = Task::findOrFail($id);
-            return view('tasks.edit', ['tasks' => $tasks ]);
+        //認証済みユーザがその投稿者の所有者であれば
+        if(\Auth::id() == $tasks->user_id){
+            if(\Auth::check()){
+                $tasks = Task::findOrFail($id);
+                return view('tasks.edit', ['tasks' => $tasks ]);
+            }
+        }
+        else{
+            return redirect('/');
         }
     }
     
@@ -96,13 +109,18 @@ class TasksController extends Controller
             'status' => 'required|max:10',    
         ]);
         
-        
-        //idの値でタスクを検索して取得
-        $task = Task::findOrFail($id);
-        //タスクを更新
-        $task->status = $request->status;
-        $task->content = $request->content;
-        $task->save();
+        //認証済みユーザがその投稿者の所有者であれば
+        if(\Auth::id() == $tasks->user_id){
+            //idの値でタスクを検索して取得
+            $task = Task::findOrFail($id);
+            //タスクを更新
+            $task->status = $request->status;
+            $task->content = $request->content;
+            $task->save();
+        }
+        else{
+            return redirect('/');
+        }
         
         
         /*
@@ -121,12 +139,13 @@ class TasksController extends Controller
     
     public function destroy($id)
     {
-        //idでタスクを検索して削除
-        $task = Task::findOrFail($id);
-        
-        
-        //タスクを削除
-        $task->delete();
+        //認証済みユーザがその投稿者の所有者であれば
+        if(\Auth::id() == $tasks->user_id){
+            //idでタスクを検索して削除
+            $task = Task::findOrFail($id);
+            //タスクを削除
+            $task->delete();
+        }
         
         //トップページへリダイレクト
         return redirect('/');
